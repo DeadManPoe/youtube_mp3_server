@@ -1,0 +1,14 @@
+{
+  "name": "youtube_mp3_server",
+  "version": "1.0.0",
+  "description": "A nodejs express server to download youtube videos as mp3s",
+  "main": "index.js",
+  "repository": "https://github.com/DeadManPoe/youtube_mp3_server.git",
+  "author": "giorgiopea <annatar93@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.1",
+    "cors": "^2.8.4",
+    "express": "^4.15.4"
+  }
+}
