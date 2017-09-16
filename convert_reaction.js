@@ -1,6 +1,7 @@
 const fs = require('fs');
 const exec = require('child_process').exec;
 const url = require('url');
+const descriptions = require('./descriptions');
 
 const youtube_dl_command = ()=>{
     
@@ -11,7 +12,9 @@ const youtube_validate_url = (url_)=>{
         const hostname = url_objecturl.hostname;
         const pathname = url_object.pathname;
         const query = url_object.query;
-        if ( hostname !== 'www.youtube.com' || pathname !== 'watch' || /v=.+/.test(query)){
+        if ( hostname !== 'www.youtube.com' 
+        || pathname !== descriptions.YOUTUBE_PATHNAME_STRUCTURE 
+        || descriptions.YOUTUBE_QUERY_STRUCTURE.test(query)){
             return false
         }
         return url_object;
@@ -28,8 +31,8 @@ const convert_reaction = (req,res)=>{
         return;
     }
     const filename = url_object.query;
-    const filepath = `${__dirname}/tmp_files/${filename}`.mp3;
-    exec(`youtube-dl -x --audio-format mp3 -f 'best[height<=480]' -o './tmp_files/%(id)s.%(ext)s'`,(err,stdout,stderr)=>{
+    const filepath = `${__dirname}/tmp_files/${filename}.mp3`;
+    exec(descriptions.YOUTUBE_DL_COMMAND_STRUCTURE + ` ${url_}`,(err,stdout,stderr)=>{
         if (err){
             res.status(422).end('Cannot process the video');
             return;
